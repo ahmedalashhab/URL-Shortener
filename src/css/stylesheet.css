@@ -1,0 +1,64 @@
+:root {
+  --first-color: #34313D;
+  --second-color: #3A3054;
+  --third-color: #4B3F6B;
+  --fourth-color: #9E9AA8;
+  --fifth-color: #EFF1F7;
+  --sixth-color: #2BD0D0;
+}
+
+.test123 {
+  color: var(--sixth-color);
+}
+
+.poppins-700 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+.poppins-500 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+.first-color {
+  color: var(--first-color);
+}
+
+.second-color {
+  color: var(--second-color);
+}
+
+.third-color {
+  color: var(--third-color);
+}
+
+.fourth-color {
+  color: var(--fourth-color);
+}
+
+.fifth-color {
+  color: var(--fifth-color)
+}
+
+.sixth-color {
+  color: var(--sixth-color)
+}
+
+
+.custom-button {
+  background-color: var(--sixth-color);
+}
+
+.search-bar {
+  background-image: url('../assets/images/bg-shorten-desktop.svg');
+  background-color: var(--second-color);
+}
+
+.statistics {
+  background-color: var(--fifth-color);
+}
+
+.icon{
+  background-color: var(--second-color);
+}
