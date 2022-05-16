@@ -62,3 +62,13 @@
 .icon{
   background-color: var(--second-color);
 }
+
+.bg-boost{
+  background-image: url('../assets/images/bg-boost-desktop.svg');
+  background-size: cover;
+  background-color: var(--second-color)
+}
+
+.footer-background {
+  background-color: #232127;
+}

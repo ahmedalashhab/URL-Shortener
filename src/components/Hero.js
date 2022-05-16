@@ -6,8 +6,8 @@ const Hero = () => {
   return (
     <section className="flex flex-col">
       <Nav />
-      <div className="flex mt-16 items-center mx-auto w-3/4">
-        <div className="flex-col first-color">
+      <div className="flex gap-36 mt-16 items-center mx-auto w-3/4">
+        <div className="flex flex-col first-color">
           <h1 className="text-7xl poppins-700 first-color mx-auto leading-tight ">
             More than just shorter links
           </h1>
@@ -15,15 +15,13 @@ const Hero = () => {
             Build your brand’s recognition and get detailed insights on how your
             links are performing.
           </h3>
-          <button className="custom-button hover:bg-teal-200 rounded-full text-white poppins-700 py-3 px-9 text-xl mt-8">
+          <button className="custom-button w-52 hover:bg-teal-200 rounded-full text-white poppins-700 py-3 text-xl mt-8">
             Get Started
           </button>
         </div>
-        <img
-          className="-mr-48"
-          alt="seated employee working on computer"
-          src={lady}
-        />
+        <div className="w-full -mr-48">
+          <img alt="seated employee working on computer" src={lady} />
+        </div>
       </div>
     </section>
   );

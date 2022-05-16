@@ -29,9 +29,9 @@ const Statistics = () => {
             statistics dashboard.
           </span>
         </section>
-        <div className="flex mt-20 gap-12 mb-48">
-          <div className="flex-col bg-white rounded-lg  ">
-            <div className="icon p-6 rounded-full w-20 ml-8 -translate-y-12">
+        <div className="flex mt-20 gap-12 mb-48 relative">
+          <div className="flex-col bg-white rounded-lg z-10">
+            <div className="icon p-5 rounded-full w-20 ml-8 -translate-y-12">
               <img alt="graph icon" src={brand} />
             </div>
             <div className="flex flex-col gap-4 px-8 ">
@@ -45,27 +45,36 @@ const Statistics = () => {
               </span>
             </div>
           </div>
-          <div className="flex-col bg-white rounded-lg">
-            <div className="icon p-6 rounded-full w-20">
+          <div className="flex-col bg-white rounded-lg translate-y-12 z-10">
+            <div className="icon p-5 rounded-full w-20 ml-8 -translate-y-12">
               <img alt="speedometer" src={detailed} />
             </div>
-            <span>Detailed Records</span>
-            <span>
-              Gain insights into who is clicking your links. Knowing when and
-              where people engage with your content helps inform better
-              decisions.
-            </span>
+            <div className="flex flex-col gap-4 px-8 ">
+              <span className="poppins-700 first-color text-xl ">
+                Detailed Records
+              </span>
+              <span className="fourth-color poppins-500 text-md pb-8">
+                Gain insights into who is clicking your links. Knowing when and
+                where people engage with your content helps inform better
+                decisions.
+              </span>
+            </div>
           </div>
-          <div className="flex-col bg-white rounded-lg">
-            <div className="icon p-5 rounded-full w-20">
+          <div className="flex-col bg-white rounded-lg translate-y-24 z-10">
+            <div className="icon p-5 rounded-full w-20 ml-8 -translate-y-12">
               <img alt="stylus pens" src={fully} />
             </div>
-            <span>Fully Customizable</span>
-            <span>
-              Improve brand awareness and content discoverability through
-              customizable links, supercharging audience engagement.
-            </span>
+            <div className="flex flex-col gap-4 px-8">
+              <span className="poppins-700 first-color text-xl ">
+                Fully Customizable
+              </span>
+              <span className="fourth-color poppins-500 text-md pb-8">
+                Improve brand awareness and content discoverability through
+                customizable links, supercharging audience engagement.
+              </span>
+            </div>
           </div>
+          <div className="w-full custom-button z-0 h-3 w-full absolute translate-y-32"></div>
         </div>
       </div>
     </div>
