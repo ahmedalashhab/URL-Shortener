@@ -1,7 +1,12 @@
-import React from "@types/react";
+import axios from "axios";
 
-const API = () => {
-  return <div>API</div>
-}
-
-export default API
+const getShortLink = async (link) => {
+  return await axios
+    .post(`https://api.shrtco.de/v2/shorten?url=${link}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};

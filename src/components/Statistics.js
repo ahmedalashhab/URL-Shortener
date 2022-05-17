@@ -1,26 +1,132 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 
 import brand from "../assets/images/icon-brand-recognition.svg";
 import detailed from "../assets/images/icon-detailed-records.svg";
 import fully from "../assets/images/icon-fully-customizable.svg";
 
+const getLocalStorage = () => {
+  let links = localStorage.getItem("links");
+
+  if (links) {
+    return JSON.parse(links);
+  } else {
+    return [];
+  }
+};
+
 const Statistics = () => {
+  const [text, setText] = useState("");
+  const [links, setLinks] = useState(getLocalStorage());
+  const [buttonText, setButtonText] = useState("Copy");
+  const [errorMode, setErrorMode] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const validURL = (text) => {
+      const pattern = new RegExp(
+        "^(https?:\\/\\/)?" + // protocol
+          "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+          "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+          "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+          "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+          "(\\#[-a-z\\d_]*)?$",
+        "i"
+      ); // fragment locator
+      return !!pattern.test(text);
+    };
+
+    validURL(text);
+
+    if (!text) {
+      setErrorMode(true);
+    } else if (!validURL(text)) {
+      alert("Please insert a valid URL");
+      setErrorMode(true);
+    } else {
+      setErrorMode(false);
+      const shortenLink = async () => {
+        // fetch response
+        const res = await fetch(`https://api.shrtco.de/v2/shorten?url=${text}`);
+        //convert to JSON
+        const data = await res.json();
+        //Save to state
+        setLinks([...links, data.result]);
+        //Clear input
+        setText(" ");
+        console.log(links);
+        console.log(links.length);
+      };
+      shortenLink();
+      console.log(errorMode);
+    }
+  };
+
+  const renderList = () => {
+    return (
+      <>
+        {links.length === 0
+          ? null
+          : links.map((link) => {
+              return (
+                <div className="flex bg-white p-3 items-center rounded ">
+                  <div className="w-3/4 poppins-500">{link.original_link}</div>
+                  <div className="sixth-color poppins-500">
+                    {link.full_short_link}
+                  </div>
+                  <button
+                    onClick={handleCopy}
+                    className="custom-button rounded ml-4 py-1 px-6 hover:bg-teal-200 text-white poppins-500 focus:bg-slate-800"
+                  >
+                    {buttonText}
+                  </button>
+                </div>
+              );
+            })}
+      </>
+    );
+  };
+
+  //TODO FIX THIS COPY AND PASTE
+  const handleCopy = () => {
+    navigator.clipboard.writeText(links.full_short_link);
+    setButtonText("Copied!");
+  };
+
+  useEffect(() => {
+    localStorage.setItem("links", JSON.stringify(links));
+  }, [links]);
+
   return (
     <div className=" statistics">
       <div className=" flex flex-col mx-auto mt-36 w-3/4">
-        <section className="search-bar rounded-xl -translate-y-20">
-          <form className="flex justify-center py-12 pl-12">
-            <input
-              type="url"
-              className=" rounded-lg poppins-500 text-lg w-3/4 h-16 px-6 my-auto"
-              placeholder="Shorten a link here..."
-            />
-            <button className="custom-button poppins-700 rounded-2xl mx-auto px-9 py-5 text-white text-xl hover:bg-teal-200  ">
-              Shorten it!
-            </button>
-          </form>
+        <section>
+          <div className="search-bar rounded-xl -translate-y-20  ">
+            <form
+              onSubmit={handleSubmit}
+              className="flex justify-center py-12 pl-12 "
+            >
+              <input
+                type="url"
+                className={`rounded-lg poppins-500 text-lg w-3/4 h-16 px-6 my-auto ${
+                  errorMode === true ? "border-4" : ""
+                } border-red-500`}
+                placeholder="Shorten a link here..."
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+              <button
+                onClick={handleSubmit}
+                className="custom-button poppins-700 rounded-2xl mx-auto px-9 py-5 text-white text-xl hover:bg-teal-200"
+              >
+                Shorten it!
+              </button>
+            </form>
+          </div>
+          <div className="flex flex-col gap-4 -mt-16  ">{renderList()}</div>
         </section>
-        <section className=" flex flex-col gap-4">
+        <section className=" flex flex-col gap-4 mt-24">
           <h3 className="mx-auto first-color poppins-700 text-4xl">
             Advanced Statistics
           </h3>
@@ -40,8 +146,8 @@ const Statistics = () => {
               </span>
               <span className="fourth-color poppins-500 text-md pb-8">
                 Boost your brand recognition with each click. Generic links
-                don’t mean a thing. Branded links help instil confidence in your
-                content.
+                don’t mean a thing. Branded links help instill confidence in
+                your content.
               </span>
             </div>
           </div>

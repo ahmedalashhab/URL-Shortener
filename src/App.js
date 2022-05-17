@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import Statistics from "./components/Statistics";
 import Boost from "./components/Boost";
 import Footer from "./components/Footer";
+import { getShortLink } from "./components/API";
 
 const App = () => {
   return (
