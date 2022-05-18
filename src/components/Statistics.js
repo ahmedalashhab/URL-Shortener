@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import brand from "../assets/images/icon-brand-recognition.svg";
 import detailed from "../assets/images/icon-detailed-records.svg";
@@ -18,7 +17,6 @@ const getLocalStorage = () => {
 const Statistics = () => {
   const [text, setText] = useState("");
   const [links, setLinks] = useState(getLocalStorage());
-  const [buttonText, setButtonText] = useState("Copy");
   const [errorMode, setErrorMode] = useState(false);
 
   const handleSubmit = (e) => {
@@ -44,6 +42,7 @@ const Statistics = () => {
     } else if (!validURL(text)) {
       alert("Please insert a valid URL");
       setErrorMode(true);
+      setText("");
     } else {
       setErrorMode(false);
       const shortenLink = async () => {
@@ -55,11 +54,8 @@ const Statistics = () => {
         setLinks([...links, data.result]);
         //Clear input
         setText(" ");
-        console.log(links);
-        console.log(links.length);
       };
       shortenLink();
-      console.log(errorMode);
     }
   };
 
@@ -76,10 +72,12 @@ const Statistics = () => {
                     {link.full_short_link}
                   </div>
                   <button
-                    onClick={handleCopy}
-                    className="custom-button rounded ml-4 py-1 px-6 hover:bg-teal-200 text-white poppins-500 focus:bg-slate-800"
+                    onClick={(e) => {
+                      handleCopy(e, link);
+                    }}
+                    className="custom-button rounded ml-4 py-1 w-24 hover:bg-teal-200 text-white poppins-500 focus:bg-slate-800"
                   >
-                    {buttonText}
+                    Copy
                   </button>
                 </div>
               );
@@ -89,9 +87,9 @@ const Statistics = () => {
   };
 
   //TODO FIX THIS COPY AND PASTE
-  const handleCopy = () => {
-    navigator.clipboard.writeText(links.full_short_link);
-    setButtonText("Copied!");
+  const handleCopy = (e, link) => {
+    navigator.clipboard.writeText(link.full_short_link);
+    e.target.textContent = "Copied!";
   };
 
   useEffect(() => {
@@ -112,10 +110,15 @@ const Statistics = () => {
                 className={`rounded-lg poppins-500 text-lg w-3/4 h-16 px-6 my-auto ${
                   errorMode === true ? "border-4" : ""
                 } border-red-500`}
-                placeholder="Shorten a link here..."
+                placeholder={
+                  errorMode
+                    ? "Please insert a valid URL"
+                    : "Shorten a link here"
+                }
                 value={text}
                 onChange={(e) => setText(e.target.value)}
               />
+
               <button
                 onClick={handleSubmit}
                 className="custom-button poppins-700 rounded-2xl mx-auto px-9 py-5 text-white text-xl hover:bg-teal-200"
